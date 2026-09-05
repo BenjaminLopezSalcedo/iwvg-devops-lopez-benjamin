@@ -54,8 +54,8 @@ jobs:
       - name: 📊 Sonar Analysis
         run: >
           mvn -B sonar:sonar 
-          -Dsonar.projectKey=BenjaminLopezSalcedo_${{ env.ARTIFACT }}
-          -Dsonar.organization=BenjaminLopezSalcedo
+          -Dsonar.projectKey=benjaminlopezsalcedo_${{ env.ARTIFACT }}
+          -Dsonar.organization=benjaminlopezsalcedo
           -Dsonar.host.url=https://sonarcloud.io 
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
         env:
