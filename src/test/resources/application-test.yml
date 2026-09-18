@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/iwvgdevopsdb
     username: postgres
-    password: postgres
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
