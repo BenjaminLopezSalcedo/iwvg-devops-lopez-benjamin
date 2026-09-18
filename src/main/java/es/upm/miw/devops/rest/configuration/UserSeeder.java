@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Profile;
 public class UserSeeder {
 
     private static final int NUMBER_OF_USERS = 10;
+    private static final Random RANDOM = new Random();
 
     private static final List<String> FIRST_NAMES = List.of(
             "James",
@@ -63,13 +64,12 @@ public class UserSeeder {
     CommandLineRunner seedUsers(UserRepository userRepository) {
         return args -> {
             if (userRepository.count() == 0) {
-                Random random = new Random();
 
                 for (int i = 1; i <= NUMBER_OF_USERS; i++) {
-                    String firstName = randomElement(FIRST_NAMES, random);
-                    String familyName = randomElement(FAMILY_NAMES, random);
-                    String city = randomElement(CITIES, random);
-                    String province = randomElement(PROVINCES, random);
+                    String firstName = randomElement(FIRST_NAMES, RANDOM);
+                    String familyName = randomElement(FAMILY_NAMES, RANDOM);
+                    String city = randomElement(CITIES, RANDOM);
+                    String province = randomElement(PROVINCES, RANDOM);
 
                     User user = new User(
                             String.valueOf(i),
@@ -81,7 +81,7 @@ public class UserSeeder {
                             city,
                             province,
                             String.valueOf(28000+i),
-                            random.nextBoolean(),
+                            RANDOM.nextBoolean(),
                             i % 2 == 0 ? "USER" : "ADMIN"
                     );
 
