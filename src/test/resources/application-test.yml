@@ -2,12 +2,12 @@ logging:
   level:
     es.upm.miw: DEBUG
 
+# H2 Embedded
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/iwvgdevopsdb
-    username: postgres
-    password: ${DB_PASSWORD}
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
