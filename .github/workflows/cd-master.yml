@@ -70,7 +70,7 @@ jobs:
               --memory 512m \
               --memory-swap 1024m \
               --network devops \
-              -p 8080:8080 \
+              -p 10000:8080 \
               -e SPRING_PROFILES_ACTIVE=prod \
               -e POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
               -e POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
