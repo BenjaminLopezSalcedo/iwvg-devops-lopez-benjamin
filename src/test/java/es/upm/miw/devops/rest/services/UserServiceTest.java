@@ -163,4 +163,63 @@ class UserServiceTest {
 
         verify(userRepository, never()).delete(any(User.class));
     }
+
+    @Test
+    void testSetActiveTrue() {
+        User user = new User(
+                "1",
+                "John",
+                "Smith",
+                "john.smith@example.com",
+                "IDENTITY1",
+                "Main Street 1",
+                "Madrid",
+                "Madrid",
+                "28001",
+                false,
+                "USER"
+        );
+
+        when(userRepository.findById("1")).thenReturn(Optional.of(user));
+
+        userService.setActive("1", true);
+
+        assertThat(user.isActive()).isTrue();
+        verify(userRepository).save(user);
+    }
+
+    @Test
+    void testSetActiveFalse() {
+        User user = new User(
+                "1",
+                "John",
+                "Smith",
+                "john.smith@example.com",
+                "IDENTITY1",
+                "Main Street 1",
+                "Madrid",
+                "Madrid",
+                "28001",
+                true,
+                "USER"
+        );
+
+        when(userRepository.findById("1")).thenReturn(Optional.of(user));
+
+        userService.setActive("1", false);
+
+        assertThat(user.isActive()).isFalse();
+        verify(userRepository).save(user);
+    }
+
+    @Test
+    void testSetActiveNotFound() {
+        when(userRepository.findById("999")).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> userService.setActive("999", true))
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage("User with id 999 not found");
+
+        verify(userRepository, never()).save(any(User.class));
+    }
 }
