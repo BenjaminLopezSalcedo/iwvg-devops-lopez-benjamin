@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/user")
@@ -20,5 +22,10 @@ public class UserResource {
     @GetMapping("/{id}")
     public User findById(@PathVariable String id) {
         return this.userService.findById(id);
+    }
+
+    @GetMapping
+    public List<User> findBillable(@RequestParam boolean billable) {
+        return this.userService.findBillable();
     }
 }
