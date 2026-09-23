@@ -63,29 +63,11 @@ public class UserSeeder {
     @Bean
     CommandLineRunner seedUsers(UserRepository userRepository) {
         return args -> {
-            if (userRepository.count() == 0) {
+            for (int i = 1; i <= NUMBER_OF_USERS; i++) {
+                String id = String.valueOf(i);
 
-                for (int i = 1; i <= NUMBER_OF_USERS; i++) {
-                    String firstName = randomElement(FIRST_NAMES, RANDOM);
-                    String familyName = randomElement(FAMILY_NAMES, RANDOM);
-                    String city = randomElement(CITIES, RANDOM);
-                    String province = randomElement(PROVINCES, RANDOM);
-
-                    User user = new User(
-                            String.valueOf(i),
-                            firstName,
-                            familyName,
-                            firstName.toLowerCase() + "." + familyName.toLowerCase() + i + "@example.com",
-                            "IDENTITY" + i,
-                            "Main Street " + i,
-                            city,
-                            province,
-                            String.valueOf(28000+i),
-                            RANDOM.nextBoolean(),
-                            i % 2 == 0 ? "USER" : "ADMIN"
-                    );
-
-                    userRepository.save(user);
+                if (!userRepository.existsById(id)) {
+                    userRepository.save(createRandomUser(i));
                 }
             }
 
@@ -149,5 +131,26 @@ public class UserSeeder {
 
     private String randomElement(List<String> values, Random random) {
         return values.get(random.nextInt(values.size()));
+    }
+
+    private User createRandomUser(int id) {
+        String firstName = randomElement(FIRST_NAMES, RANDOM);
+        String familyName = randomElement(FAMILY_NAMES, RANDOM);
+        String city = randomElement(CITIES, RANDOM);
+        String province = randomElement(PROVINCES, RANDOM);
+
+        return new User(
+                String.valueOf(id),
+                firstName,
+                familyName,
+                firstName.toLowerCase() + "." + familyName.toLowerCase() + id + "@example.com",
+                "IDENTITY" + id,
+                "Main Street " + id,
+                city,
+                province,
+                String.valueOf(28000+id),
+                RANDOM.nextBoolean(),
+                id % 2 == 0 ? "USER" : "ADMIN"
+        );
     }
 }

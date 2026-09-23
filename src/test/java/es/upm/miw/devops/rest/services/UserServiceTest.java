@@ -2,21 +2,22 @@ package es.upm.miw.devops.rest.services;
 
 import es.upm.miw.devops.rest.models.User;
 import es.upm.miw.devops.rest.repositories.UserRepository;
-import es.upm.miw.devops.rest.services.UserNotFoundException;
-import es.upm.miw.devops.rest.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+
 import java.util.Optional;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
-
-import java.util.List;
+import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -127,5 +128,39 @@ class UserServiceTest {
         List<User> result = userService.findByBillable(false);
 
         assertThat(result).containsExactly(nonBillableUser);
+    }
+
+    @Test
+    void testDeleteById() {
+        User user = new User(
+                "1",
+                "Benjamin",
+                "Lopez",
+                "benjamin@example.com",
+                "12345678A",
+                "Main Street 1",
+                "Madrid",
+                "Madrid",
+                "28001",
+                true,
+                "USER"
+        );
+
+        when(userRepository.findById("1")).thenReturn(Optional.of(user));
+
+        userService.deleteById("1");
+
+        verify(userRepository).delete(user);
+    }
+
+    @Test
+    void testDeleteByIdNotFound() {
+        when(userRepository.findById("999")).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> userService.deleteById("999"))
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage("User with id 999 not found");
+
+        verify(userRepository, never()).delete(any(User.class));
     }
 }
