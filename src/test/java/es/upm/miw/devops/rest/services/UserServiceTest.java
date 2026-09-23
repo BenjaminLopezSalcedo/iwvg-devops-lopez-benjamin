@@ -16,6 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
@@ -55,5 +57,40 @@ class UserServiceTest {
         assertThatThrownBy(() -> userService.findById("1"))
                 .isInstanceOf(UserNotFoundException.class)
                 .hasMessage("User with id 1 not found");
+    }
+
+    @Test
+    void testFindBillable() {
+        User billableUser = new User(
+                "1",
+                "Benjamin",
+                "Lopez",
+                "benjamin@example.com",
+                "12345678A",
+                "Street 1",
+                "Madrid",
+                "Madrid",
+                "28001",
+                true,
+                "USER");
+
+        User nonBillableUser = new User(
+                "2",
+                "Benjamin",
+                "Lopez",
+                null,
+                "12345678B",
+                "Street 2",
+                "Madrid",
+                "Madrid",
+                "28002",
+                true,
+                "USER");
+
+        when(userRepository.findAll()).thenReturn(List.of(billableUser, nonBillableUser));
+
+        List<User> result = userService.findBillable();
+
+        assertThat(result).containsExactly(billableUser);
     }
 }
