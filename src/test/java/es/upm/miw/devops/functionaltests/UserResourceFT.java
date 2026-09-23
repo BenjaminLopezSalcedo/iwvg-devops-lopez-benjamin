@@ -70,4 +70,20 @@ class UserResourceFT {
                 .jsonPath("$[?(@.id == '13')].email").doesNotExist()
                 .jsonPath("$[?(@.id == '13')].address").isEqualTo("   ");
     }
+
+    @Test
+    void testDeleteById() {
+        webTestClient.delete()
+                .uri("/user/1")
+                .exchange()
+                .expectStatus().isNoContent();
+    }
+
+    @Test
+    void testDeleteByIdNotFound() {
+        webTestClient.delete()
+                .uri("/user/999")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }

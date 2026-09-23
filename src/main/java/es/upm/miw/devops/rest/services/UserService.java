@@ -41,4 +41,9 @@ public class UserService {
                 .toList();
     }
 
+    public void deleteById(String id){
+        User user = this.findById(id);
+        this.userRepository.delete(user);
+    }
+
 }

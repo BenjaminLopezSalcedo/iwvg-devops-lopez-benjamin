@@ -2,12 +2,11 @@ package es.upm.miw.devops.rest;
 
 import es.upm.miw.devops.rest.models.User;
 import es.upm.miw.devops.rest.services.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/user")
@@ -28,4 +27,11 @@ public class UserResource {
     public List<User> findBillable(@RequestParam boolean billable) {
         return this.userService.findByBillable(billable);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable String id){
+        this.userService.deleteById(id);
+    }
+
 }
