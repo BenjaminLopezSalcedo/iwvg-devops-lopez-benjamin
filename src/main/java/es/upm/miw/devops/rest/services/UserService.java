@@ -34,10 +34,10 @@ public class UserService {
                 && hasContent(user.getPostalCode());
     }
 
-    public List<User> findBillable() {
+    public List<User> findByBillable(boolean billable) {
         return this.userRepository.findAll()
                 .stream()
-                .filter(this::isBillable)
+                .filter(user -> isBillable(user) == billable)
                 .toList();
     }
 

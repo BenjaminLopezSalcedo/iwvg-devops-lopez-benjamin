@@ -26,6 +26,6 @@ public class UserResource {
 
     @GetMapping
     public List<User> findBillable(@RequestParam boolean billable) {
-        return this.userService.findBillable();
+        return this.userService.findByBillable(billable);
     }
 }

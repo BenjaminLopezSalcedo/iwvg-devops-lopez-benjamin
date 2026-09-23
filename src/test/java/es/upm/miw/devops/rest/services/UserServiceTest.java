@@ -89,8 +89,43 @@ class UserServiceTest {
 
         when(userRepository.findAll()).thenReturn(List.of(billableUser, nonBillableUser));
 
-        List<User> result = userService.findBillable();
+        List<User> result = userService.findByBillable(true);
 
         assertThat(result).containsExactly(billableUser);
+    }
+
+    @Test
+    void testFindNonBillable() {
+        User billableUser = new User(
+                "1",
+                "Benjamin",
+                "Lopez",
+                "benjamin@example.com",
+                "12345678A",
+                "Street 1",
+                "Madrid",
+                "Madrid",
+                "28001",
+                true,
+                "USER");
+
+        User nonBillableUser = new User(
+                "2",
+                "Benjamin",
+                "Lopez",
+                null,
+                "12345678B",
+                "Street 2",
+                "Madrid",
+                "Madrid",
+                "28002",
+                true,
+                "USER");
+
+        when(userRepository.findAll()).thenReturn(List.of(billableUser, nonBillableUser));
+
+        List<User> result = userService.findByBillable(false);
+
+        assertThat(result).containsExactly(nonBillableUser);
     }
 }

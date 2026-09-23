@@ -87,9 +87,11 @@ public class UserSeeder {
 
                     userRepository.save(user);
                 }
+            }
 
-                //Populate with problematic users for test purposes
+            //Populate with problematic users for test purposes
 
+            if (!userRepository.existsById("11")){
                 User user11 = new User(
                         "11",
                         "Benjamin",
@@ -104,6 +106,10 @@ public class UserSeeder {
                         "USER"
                 );
 
+                userRepository.save(user11);
+            }
+
+            if (!userRepository.existsById("12")){
                 User user12 = new User(
                         "12",
                         "Benjamin",
@@ -118,6 +124,10 @@ public class UserSeeder {
                         "USER"
                 );
 
+                userRepository.save(user12);
+            }
+
+            if (!userRepository.existsById("13")){
                 User user13 = new User(
                         "13",
                         "Benjamin",
@@ -132,8 +142,6 @@ public class UserSeeder {
                         "USER"
                 );
 
-                userRepository.save(user11);
-                userRepository.save(user12);
                 userRepository.save(user13);
             }
         };
