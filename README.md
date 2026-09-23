@@ -2,17 +2,17 @@
 ## Ingeniería Web: Visión General (IWVG) DevOps
 > Este proyecto es un apoyo docente de la asignatura. Cada release liberada corresponde al código utilizado en clase del curso indicado
 
-[![GitHub](https://img.shields.io/github/license/miw-upm/iwvg-devops?color=informational)](https://github.com/miw-upm/iwvg-devops/blob/develop/LICENSE.md)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/miw-upm/iwvg-devops?color=informational)](https://github.com/miw-upm/iwvg-devops/releases)
-![GitHub Release Date](https://img.shields.io/github/release-date/miw-upm/iwvg-devops?color=informational)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/miw-upm/iwvg-devops)
-![GitHub issues](https://img.shields.io/github/issues/miw-upm/iwvg-devops?color=important)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/miw-upm/iwvg-devops?color=informational)
+[![GitHub](https://img.shields.io/github/license/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin?color=informational)](https://github.com/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin/blob/develop/LICENSE.md)
+[![GitHub release](https://img.shields.io/github/v/release/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin?include_prereleases&color=informational)](https://github.com/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin/releases)
+![GitHub Release Date](https://img.shields.io/github/release-date/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin?color=informational)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin)
+![GitHub issues](https://img.shields.io/github/issues/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin?color=important)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin?color=informational)
 
 ### Estado del código
-[![DevOps](https://github.com/miw-upm/iwvg-devops/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/miw-upm/iwvg-devops/actions/workflows/continuous-integration.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=es.upm.miw%3Aiwvg-devops&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=es.upm.miw%3Aiwvg-devops)
-[![Render broken](https://iwvg-devops-latest.onrender.com/version-badge)](https://iwvg-devops-latest.onrender.com/swagger-ui.html)
+[![DevOps](https://github.com/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin/blob/main/.github/workflows/continuous-integration.yml/badge.svg)](https://github.com/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin/blob/main/.github/workflows/continuous-integration.yml)
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=BenjaminLopezSalcedo_iwvg-devops-lopez-benjamin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=BenjaminLopezSalcedo_iwvg-devops-lopez-benjamin)
+[![Render broken](https://iwvg-devops-lopez-benjamin.onrender.com/version-badge)](https://iwvg-devops-lopez-benjamin.onrender.com/swagger-ui.html)
 
 
 ### Tecnologías necesarias
