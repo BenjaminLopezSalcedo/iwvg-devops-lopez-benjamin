@@ -46,4 +46,10 @@ public class UserService {
         this.userRepository.delete(user);
     }
 
+    public void setActive(String id, boolean active) {
+        User user = this.findById(id);
+        user.setActive(active);
+        this.userRepository.save(user);
+    }
+
 }

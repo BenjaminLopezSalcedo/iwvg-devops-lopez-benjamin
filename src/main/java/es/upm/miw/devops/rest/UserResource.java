@@ -34,4 +34,10 @@ public class UserResource {
         this.userService.deleteById(id);
     }
 
+    @PutMapping("/{id}/active")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setActive(@PathVariable String id, @RequestBody boolean active) {
+        this.userService.setActive(id, active);
+    }
+
 }
