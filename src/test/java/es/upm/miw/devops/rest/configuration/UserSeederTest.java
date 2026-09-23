@@ -20,7 +20,7 @@ class UserSeederTest {
 
         runner.run();
 
-        verify(userRepository, times(10)).save(any(User.class));
+        verify(userRepository, times(13)).save(any(User.class));
         verify(userRepository).count();
     }
 
@@ -29,6 +29,9 @@ class UserSeederTest {
         UserRepository userRepository = mock(UserRepository.class);
 
         when(userRepository.count()).thenReturn(1L);
+        when(userRepository.existsById("11")).thenReturn(true);
+        when(userRepository.existsById("12")).thenReturn(true);
+        when(userRepository.existsById("13")).thenReturn(true);
 
         UserSeeder userSeeder = new UserSeeder();
         CommandLineRunner runner = userSeeder.seedUsers(userRepository);

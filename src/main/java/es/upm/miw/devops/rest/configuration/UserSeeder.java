@@ -88,41 +88,66 @@ public class UserSeeder {
                     userRepository.save(user);
                 }
             }
+
+            //Populate with problematic users for test purposes
+
+            if (!userRepository.existsById("11")){
+                User user11 = new User(
+                        "11",
+                        "Benjamin",
+                        "Lopez",
+                        null,
+                        "IDENTITY11",
+                        "Main Street 11",
+                        "Madrid",
+                        "Madrid",
+                        "28011",
+                        true,
+                        "USER"
+                );
+
+                userRepository.save(user11);
+            }
+
+            if (!userRepository.existsById("12")){
+                User user12 = new User(
+                        "12",
+                        "Benjamin",
+                        "Lopez",
+                        "user12@example.com",
+                        "IDENTITY12",
+                        "   ",
+                        "Madrid",
+                        "Madrid",
+                        "28012",
+                        true,
+                        "USER"
+                );
+
+                userRepository.save(user12);
+            }
+
+            if (!userRepository.existsById("13")){
+                User user13 = new User(
+                        "13",
+                        "Benjamin",
+                        "Lopez",
+                        null,
+                        "IDENTITY13",
+                        "   ",
+                        "Madrid",
+                        "Madrid",
+                        "28013",
+                        true,
+                        "USER"
+                );
+
+                userRepository.save(user13);
+            }
         };
     }
 
     private String randomElement(List<String> values, Random random) {
         return values.get(random.nextInt(values.size()));
     }
-
-    /*@Bean
-    CommandLineRunner seedUsers(UserRepository userRepository) {
-        return args -> {
-            System.out.println(">>> USER SEEDER STARTED");
-
-            if (userRepository.count() == 0) {
-                Random random = new Random();
-
-                for (int i = 1; i <= 10; i++) {
-                    User user = new User(
-                            String.valueOf(i),
-                            "FirstName" + i,
-                            "FamilyName" + i,
-                            "user" + i + "@example.com",
-                            "IDENTITY" + i,
-                            "Address " + i,
-                            "City" + i,
-                            "Province" + i,
-                            "2800" + i,
-                            random.nextBoolean(),
-                            random.nextInt() % 2 == 0 ? "USER" : "ADMIN"
-                    );
-
-                    userRepository.save(user);
-                }
-
-                System.out.println(">>> USERS SEEDED");
-            }
-        };
-    }*/
 }
