@@ -2,6 +2,7 @@ package es.upm.miw.devops.rest.services;
 
 import es.upm.miw.devops.rest.models.User;
 import es.upm.miw.devops.rest.repositories.UserRepository;
+import es.upm.miw.devops.rest.models.Role;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,7 +42,7 @@ class UserServiceTest {
                 "Madrid",
                 "28001",
                 true,
-                "USER"
+                Role.CUSTOMER
         );
 
         when(userRepository.findById("1")).thenReturn(Optional.of(user));
@@ -73,7 +74,7 @@ class UserServiceTest {
                 "Madrid",
                 "28001",
                 true,
-                "USER");
+                Role.CUSTOMER);
 
         User nonBillableUser = new User(
                 "2",
@@ -86,7 +87,7 @@ class UserServiceTest {
                 "Madrid",
                 "28002",
                 true,
-                "USER");
+                Role.CUSTOMER);
 
         when(userRepository.findAll()).thenReturn(List.of(billableUser, nonBillableUser));
 
@@ -108,7 +109,7 @@ class UserServiceTest {
                 "Madrid",
                 "28001",
                 true,
-                "USER");
+                Role.CUSTOMER);
 
         User nonBillableUser = new User(
                 "2",
@@ -121,7 +122,7 @@ class UserServiceTest {
                 "Madrid",
                 "28002",
                 true,
-                "USER");
+                Role.CUSTOMER);
 
         when(userRepository.findAll()).thenReturn(List.of(billableUser, nonBillableUser));
 
@@ -143,7 +144,7 @@ class UserServiceTest {
                 "Madrid",
                 "28001",
                 true,
-                "USER"
+                Role.CUSTOMER
         );
 
         when(userRepository.findById("1")).thenReturn(Optional.of(user));
@@ -177,7 +178,7 @@ class UserServiceTest {
                 "Madrid",
                 "28001",
                 false,
-                "USER"
+                Role.CUSTOMER
         );
 
         when(userRepository.findById("1")).thenReturn(Optional.of(user));
@@ -201,7 +202,7 @@ class UserServiceTest {
                 "Madrid",
                 "28001",
                 true,
-                "USER"
+                Role.CUSTOMER
         );
 
         when(userRepository.findById("1")).thenReturn(Optional.of(user));
