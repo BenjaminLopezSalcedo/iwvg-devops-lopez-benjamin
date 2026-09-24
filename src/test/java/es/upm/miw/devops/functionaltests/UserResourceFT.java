@@ -38,4 +38,93 @@ class UserResourceFT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testFindBillable() {
+        webTestClient.get()
+                .uri("/user?billable=true")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$").isArray()
+                .jsonPath("$[0].firstName").isNotEmpty()
+                .jsonPath("$[0].familyName").isNotEmpty()
+                .jsonPath("$[0].email").isNotEmpty()
+                .jsonPath("$[0].identity").isNotEmpty()
+                .jsonPath("$[0].address").isNotEmpty()
+                .jsonPath("$[0].city").isNotEmpty()
+                .jsonPath("$[0].province").isNotEmpty()
+                .jsonPath("$[0].postalCode").isNotEmpty();
+    }
+
+    @Test
+    void testFindNonBillable() {
+        webTestClient.get()
+                .uri("/user?billable=false")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$").isArray()
+                .jsonPath("$[?(@.id == '11')].email").doesNotExist()
+                .jsonPath("$[?(@.id == '12')].address").isEqualTo("   ")
+                .jsonPath("$[?(@.id == '13')].email").doesNotExist()
+                .jsonPath("$[?(@.id == '13')].address").isEqualTo("   ");
+    }
+
+    @Test
+    void testDeleteById() {
+        webTestClient.delete()
+                .uri("/user/1")
+                .exchange()
+                .expectStatus().isNoContent();
+    }
+
+    @Test
+    void testDeleteByIdNotFound() {
+        webTestClient.delete()
+                .uri("/user/999")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testSetActiveTrue() {
+        webTestClient.put()
+                .uri("/user/1/active")
+                .bodyValue(true)
+                .exchange()
+                .expectStatus().isNoContent();
+
+        webTestClient.get()
+                .uri("/user/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.active").isEqualTo(true);
+    }
+
+    @Test
+    void testSetActiveFalse() {
+        webTestClient.put()
+                .uri("/user/1/active")
+                .bodyValue(false)
+                .exchange()
+                .expectStatus().isNoContent();
+
+        webTestClient.get()
+                .uri("/user/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.active").isEqualTo(false);
+    }
+
+    @Test
+    void testSetActiveNotFound() {
+        webTestClient.put()
+                .uri("/user/999/active")
+                .bodyValue(true)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }
