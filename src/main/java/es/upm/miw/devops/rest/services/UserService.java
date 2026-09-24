@@ -1,6 +1,7 @@
 package es.upm.miw.devops.rest.services;
 
 import es.upm.miw.devops.rest.models.User;
+import es.upm.miw.devops.rest.dtos.UserUpdateDto;
 import es.upm.miw.devops.rest.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -49,6 +50,23 @@ public class UserService {
     public void setActive(String id, boolean active) {
         User user = this.findById(id);
         user.setActive(active);
+        this.userRepository.save(user);
+    }
+
+    public void update(String id, UserUpdateDto userUpdateDto) {
+        User user = this.findById(id);
+
+        user.setFirstName(userUpdateDto.firstName());
+        user.setFamilyName(userUpdateDto.familyName());
+        user.setEmail(userUpdateDto.email());
+        user.setIdentity(userUpdateDto.identity());
+        user.setAddress(userUpdateDto.address());
+        user.setCity(userUpdateDto.city());
+        user.setProvince(userUpdateDto.province());
+        user.setPostalCode(userUpdateDto.postalCode());
+        user.setActive(userUpdateDto.active());
+        user.setRole(userUpdateDto.role());
+
         this.userRepository.save(user);
     }
 

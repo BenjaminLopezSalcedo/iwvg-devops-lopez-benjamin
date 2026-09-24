@@ -1,5 +1,6 @@
 package es.upm.miw.devops.rest.configuration;
 
+import es.upm.miw.devops.rest.models.Role;
 import es.upm.miw.devops.rest.models.User;
 import es.upm.miw.devops.rest.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -85,7 +86,7 @@ public class UserSeeder {
                         "Madrid",
                         "28011",
                         true,
-                        "USER"
+                        Role.CUSTOMER
                 );
 
                 userRepository.save(user11);
@@ -103,7 +104,7 @@ public class UserSeeder {
                         "Madrid",
                         "28012",
                         true,
-                        "USER"
+                        Role.CUSTOMER
                 );
 
                 userRepository.save(user12);
@@ -121,7 +122,7 @@ public class UserSeeder {
                         "Madrid",
                         "28013",
                         true,
-                        "USER"
+                        Role.CUSTOMER
                 );
 
                 userRepository.save(user13);
@@ -131,6 +132,11 @@ public class UserSeeder {
 
     private String randomElement(List<String> values, Random random) {
         return values.get(random.nextInt(values.size()));
+    }
+
+    private Role randomRole() {
+        Role[] roles = Role.values();
+        return roles[RANDOM.nextInt(roles.length)];
     }
 
     private User createRandomUser(int id) {
@@ -150,7 +156,7 @@ public class UserSeeder {
                 province,
                 String.valueOf(28000+id),
                 RANDOM.nextBoolean(),
-                id % 2 == 0 ? "USER" : "ADMIN"
+                randomRole()
         );
     }
 }

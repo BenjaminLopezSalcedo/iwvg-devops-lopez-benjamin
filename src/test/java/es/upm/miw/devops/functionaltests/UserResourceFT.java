@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.http.MediaType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -124,6 +125,68 @@ class UserResourceFT {
         webTestClient.put()
                 .uri("/user/999/active")
                 .bodyValue(true)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testUpdate() {
+        webTestClient.put()
+                .uri("/user/2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("""
+                    {
+                        "firstName": "Benjamin",
+                        "familyName": "Lopez",
+                        "email": "benjamin.updated@example.com",
+                        "identity": "UPDATED123",
+                        "address": "Updated Street 10",
+                        "city": "Barcelona",
+                        "province": "Barcelona",
+                        "postalCode": "08010",
+                        "active": false,
+                        "role": "ADMIN"
+                    }
+                    """)
+                .exchange()
+                .expectStatus().isNoContent();
+
+        webTestClient.get()
+                .uri("/user/2")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.firstName").isEqualTo("Benjamin")
+                .jsonPath("$.familyName").isEqualTo("Lopez")
+                .jsonPath("$.email").isEqualTo("benjamin.updated@example.com")
+                .jsonPath("$.identity").isEqualTo("UPDATED123")
+                .jsonPath("$.address").isEqualTo("Updated Street 10")
+                .jsonPath("$.city").isEqualTo("Barcelona")
+                .jsonPath("$.province").isEqualTo("Barcelona")
+                .jsonPath("$.postalCode").isEqualTo("08010")
+                .jsonPath("$.active").isEqualTo(false)
+                .jsonPath("$.role").isEqualTo("ADMIN");
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        webTestClient.put()
+                .uri("/user/999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("""
+                    {
+                        "firstName": "Benjamin",
+                        "familyName": "Lopez",
+                        "email": "benjamin@example.com",
+                        "identity": "12345678A",
+                        "address": "Main Street 1",
+                        "city": "Madrid",
+                        "province": "Madrid",
+                        "postalCode": "28001",
+                        "active": true,
+                        "role": "CUSTOMER"
+                    }
+                    """)
                 .exchange()
                 .expectStatus().isNotFound();
     }
