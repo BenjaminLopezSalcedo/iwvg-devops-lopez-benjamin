@@ -20,7 +20,7 @@ class UserTest {
                 "Madrid",
                 "28001",
                 true,
-                "USER"
+                Role.CUSTOMER
         );
 
         assertThat(user.getId()).isEqualTo("1");
@@ -33,7 +33,7 @@ class UserTest {
         assertThat(user.getProvince()).isEqualTo("Madrid");
         assertThat(user.getPostalCode()).isEqualTo("28001");
         assertThat(user.isActive()).isTrue();
-        assertThat(user.getRole()).isEqualTo("USER");
+        assertThat(user.getRole()).isEqualTo(Role.CUSTOMER);
     }
 
     @Test
@@ -50,7 +50,7 @@ class UserTest {
         user.setProvince("Barcelona");
         user.setPostalCode("08002");
         user.setActive(false);
-        user.setRole("ADMIN");
+        user.setRole(Role.ADMIN);
 
         assertThat(user.getId()).isEqualTo("2");
         assertThat(user.getFirstName()).isEqualTo("Emma");
@@ -62,6 +62,6 @@ class UserTest {
         assertThat(user.getProvince()).isEqualTo("Barcelona");
         assertThat(user.getPostalCode()).isEqualTo("08002");
         assertThat(user.isActive()).isFalse();
-        assertThat(user.getRole()).isEqualTo("ADMIN");
+        assertThat(user.getRole()).isEqualTo(Role.ADMIN);
     }
 }
