@@ -14,7 +14,7 @@
 
     <groupId>es.upm.miw</groupId>
     <artifactId>iwvg-devops-lopez-benjamin</artifactId>
-    <version>6.2.36</version>
+    <version>6.3.40</version>
     <packaging>jar</packaging>
     <name>${project.groupId}.${project.artifactId}</name>
     <url>https://github.com/BenjaminLopezSalcedo/${project.artifactId}</url>

@@ -323,4 +323,24 @@ class UserServiceTest {
         verify(userRepository).save(user1);
         verify(userRepository).save(user2);
     }
+
+    @Test
+    void testUpdateActiveAdminCannotBeDeactivated() {
+        User admin = new User();
+        admin.setId("1");
+        admin.setRole(Role.ADMIN);
+        admin.setActive(true);
+
+        when(userRepository.findById("1")).thenReturn(Optional.of(admin));
+
+        List<UserActiveDto> users = List.of(
+                new UserActiveDto("1", false)
+        );
+
+        userService.updateActive(users);
+
+        assertThat(admin.isActive()).isTrue();
+        verify(userRepository, never()).save(admin);
+    }
+
 }
