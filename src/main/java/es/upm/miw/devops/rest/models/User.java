@@ -3,6 +3,8 @@ package es.upm.miw.devops.rest.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 @Table(name = "users")
@@ -20,14 +22,15 @@ public class User {
     private String province;
     private String postalCode;
     private boolean active;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public User() {
     }
 
     public User(String id, String firstName, String familyName, String email,
                 String identity, String address, String city, String province,
-                String postalCode, boolean active, String role) {
+                String postalCode, boolean active, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.familyName = familyName;
@@ -121,11 +124,11 @@ public class User {
         this.active = active;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
