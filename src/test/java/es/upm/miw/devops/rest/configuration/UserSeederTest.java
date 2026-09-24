@@ -13,29 +13,44 @@ class UserSeederTest {
     void testSeedUsersWhenDatabaseIsEmpty() throws Exception {
         UserRepository userRepository = mock(UserRepository.class);
 
-        when(userRepository.count()).thenReturn(0L);
+        when(userRepository.existsById(anyString())).thenReturn(false);
 
         UserSeeder userSeeder = new UserSeeder();
         CommandLineRunner runner = userSeeder.seedUsers(userRepository);
 
         runner.run();
 
-        verify(userRepository, times(10)).save(any(User.class));
-        verify(userRepository).count();
+        verify(userRepository, times(13)).save(any(User.class));
     }
 
     @Test
     void testSeedUsersWhenDatabaseIsNotEmpty() throws Exception {
         UserRepository userRepository = mock(UserRepository.class);
 
-        when(userRepository.count()).thenReturn(1L);
+        when(userRepository.existsById(anyString())).thenReturn(true);
 
         UserSeeder userSeeder = new UserSeeder();
         CommandLineRunner runner = userSeeder.seedUsers(userRepository);
 
         runner.run();
 
-        verify(userRepository).count();
         verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    void testSeedUsersWhenSomeUsersAreMissing() throws Exception {
+        UserRepository userRepository = mock(UserRepository.class);
+
+        when(userRepository.existsById(anyString())).thenReturn(true);
+        when(userRepository.existsById("1")).thenReturn(false);
+        when(userRepository.existsById("2")).thenReturn(false);
+        when(userRepository.existsById("12")).thenReturn(false);
+
+        UserSeeder userSeeder = new UserSeeder();
+        CommandLineRunner runner = userSeeder.seedUsers(userRepository);
+
+        runner.run();
+
+        verify(userRepository, times(3)).save(any(User.class));
     }
 }

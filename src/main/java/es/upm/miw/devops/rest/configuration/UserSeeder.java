@@ -63,30 +63,68 @@ public class UserSeeder {
     @Bean
     CommandLineRunner seedUsers(UserRepository userRepository) {
         return args -> {
-            if (userRepository.count() == 0) {
+            for (int i = 1; i <= NUMBER_OF_USERS; i++) {
+                String id = String.valueOf(i);
 
-                for (int i = 1; i <= NUMBER_OF_USERS; i++) {
-                    String firstName = randomElement(FIRST_NAMES, RANDOM);
-                    String familyName = randomElement(FAMILY_NAMES, RANDOM);
-                    String city = randomElement(CITIES, RANDOM);
-                    String province = randomElement(PROVINCES, RANDOM);
-
-                    User user = new User(
-                            String.valueOf(i),
-                            firstName,
-                            familyName,
-                            firstName.toLowerCase() + "." + familyName.toLowerCase() + i + "@example.com",
-                            "IDENTITY" + i,
-                            "Main Street " + i,
-                            city,
-                            province,
-                            String.valueOf(28000+i),
-                            RANDOM.nextBoolean(),
-                            i % 2 == 0 ? "USER" : "ADMIN"
-                    );
-
-                    userRepository.save(user);
+                if (!userRepository.existsById(id)) {
+                    userRepository.save(createRandomUser(i));
                 }
+            }
+
+            //Populate with problematic users for test purposes
+
+            if (!userRepository.existsById("11")){
+                User user11 = new User(
+                        "11",
+                        "Benjamin",
+                        "Lopez",
+                        null,
+                        "IDENTITY11",
+                        "Main Street 11",
+                        "Madrid",
+                        "Madrid",
+                        "28011",
+                        true,
+                        "USER"
+                );
+
+                userRepository.save(user11);
+            }
+
+            if (!userRepository.existsById("12")){
+                User user12 = new User(
+                        "12",
+                        "Benjamin",
+                        "Lopez",
+                        "user12@example.com",
+                        "IDENTITY12",
+                        "   ",
+                        "Madrid",
+                        "Madrid",
+                        "28012",
+                        true,
+                        "USER"
+                );
+
+                userRepository.save(user12);
+            }
+
+            if (!userRepository.existsById("13")){
+                User user13 = new User(
+                        "13",
+                        "Benjamin",
+                        "Lopez",
+                        null,
+                        "IDENTITY13",
+                        "   ",
+                        "Madrid",
+                        "Madrid",
+                        "28013",
+                        true,
+                        "USER"
+                );
+
+                userRepository.save(user13);
             }
         };
     }
@@ -95,34 +133,24 @@ public class UserSeeder {
         return values.get(random.nextInt(values.size()));
     }
 
-    /*@Bean
-    CommandLineRunner seedUsers(UserRepository userRepository) {
-        return args -> {
-            System.out.println(">>> USER SEEDER STARTED");
+    private User createRandomUser(int id) {
+        String firstName = randomElement(FIRST_NAMES, RANDOM);
+        String familyName = randomElement(FAMILY_NAMES, RANDOM);
+        String city = randomElement(CITIES, RANDOM);
+        String province = randomElement(PROVINCES, RANDOM);
 
-            if (userRepository.count() == 0) {
-                Random random = new Random();
-
-                for (int i = 1; i <= 10; i++) {
-                    User user = new User(
-                            String.valueOf(i),
-                            "FirstName" + i,
-                            "FamilyName" + i,
-                            "user" + i + "@example.com",
-                            "IDENTITY" + i,
-                            "Address " + i,
-                            "City" + i,
-                            "Province" + i,
-                            "2800" + i,
-                            random.nextBoolean(),
-                            random.nextInt() % 2 == 0 ? "USER" : "ADMIN"
-                    );
-
-                    userRepository.save(user);
-                }
-
-                System.out.println(">>> USERS SEEDED");
-            }
-        };
-    }*/
+        return new User(
+                String.valueOf(id),
+                firstName,
+                familyName,
+                firstName.toLowerCase() + "." + familyName.toLowerCase() + id + "@example.com",
+                "IDENTITY" + id,
+                "Main Street " + id,
+                city,
+                province,
+                String.valueOf(28000+id),
+                RANDOM.nextBoolean(),
+                id % 2 == 0 ? "USER" : "ADMIN"
+        );
+    }
 }
