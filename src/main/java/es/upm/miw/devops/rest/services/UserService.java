@@ -2,6 +2,7 @@ package es.upm.miw.devops.rest.services;
 
 import es.upm.miw.devops.rest.models.User;
 import es.upm.miw.devops.rest.dtos.UserUpdateDto;
+import es.upm.miw.devops.rest.dtos.UserActiveDto;
 import es.upm.miw.devops.rest.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -68,6 +69,12 @@ public class UserService {
         user.setRole(userUpdateDto.role());
 
         this.userRepository.save(user);
+    }
+
+    public void updateActive(List<UserActiveDto> users) {
+        users.forEach(userActiveDto ->
+                this.setActive(userActiveDto.id(), userActiveDto.active())
+        );
     }
 
 }

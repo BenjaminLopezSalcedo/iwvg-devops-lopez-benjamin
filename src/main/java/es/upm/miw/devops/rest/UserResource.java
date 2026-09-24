@@ -2,9 +2,9 @@ package es.upm.miw.devops.rest;
 
 import es.upm.miw.devops.rest.models.User;
 import es.upm.miw.devops.rest.dtos.UserUpdateDto;
+import es.upm.miw.devops.rest.dtos.UserActiveDto;
 import es.upm.miw.devops.rest.services.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +39,12 @@ public class UserResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void setActive(@PathVariable String id, @RequestBody boolean active) {
         this.userService.setActive(id, active);
+    }
+
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateActive(@RequestBody List<UserActiveDto> users) {
+        this.userService.updateActive(users);
     }
 
     @PutMapping("/{id}")

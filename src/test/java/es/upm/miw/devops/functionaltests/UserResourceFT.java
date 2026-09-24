@@ -190,4 +190,56 @@ class UserResourceFT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testUpdateActive() {
+        webTestClient.patch()
+                .uri("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("""
+                    [
+                        {
+                            "id": "2",
+                            "active": false
+                        },
+                        {
+                            "id": "3",
+                            "active": true
+                        }
+                    ]
+                    """)
+                .exchange()
+                .expectStatus().isNoContent();
+
+        webTestClient.get()
+                .uri("/user/2")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.active").isEqualTo(false);
+
+        webTestClient.get()
+                .uri("/user/3")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.active").isEqualTo(true);
+    }
+
+    @Test
+    void testUpdateActiveNotFound() {
+        webTestClient.patch()
+                .uri("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("""
+                    [
+                        {
+                            "id": "999",
+                            "active": false
+                        }
+                    ]
+                    """)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }

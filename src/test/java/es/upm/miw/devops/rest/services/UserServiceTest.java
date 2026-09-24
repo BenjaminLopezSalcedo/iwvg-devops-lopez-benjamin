@@ -2,6 +2,7 @@ package es.upm.miw.devops.rest.services;
 
 import es.upm.miw.devops.rest.models.User;
 import es.upm.miw.devops.rest.dtos.UserUpdateDto;
+import es.upm.miw.devops.rest.dtos.UserActiveDto;
 import es.upm.miw.devops.rest.repositories.UserRepository;
 import es.upm.miw.devops.rest.models.Role;
 import org.junit.jupiter.api.Test;
@@ -294,5 +295,32 @@ class UserServiceTest {
                 .hasMessage("User with id 999 not found");
 
         verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    void testUpdateActive() {
+        User user1 = new User();
+        user1.setId("1");
+        user1.setActive(true);
+
+        User user2 = new User();
+        user2.setId("2");
+        user2.setActive(false);
+
+        when(userRepository.findById("1")).thenReturn(Optional.of(user1));
+        when(userRepository.findById("2")).thenReturn(Optional.of(user2));
+
+        List<UserActiveDto> users = List.of(
+                new UserActiveDto("1", false),
+                new UserActiveDto("2", true)
+        );
+
+        userService.updateActive(users);
+
+        assertThat(user1.isActive()).isFalse();
+        assertThat(user2.isActive()).isTrue();
+
+        verify(userRepository).save(user1);
+        verify(userRepository).save(user2);
     }
 }
