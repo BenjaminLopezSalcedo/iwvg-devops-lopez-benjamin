@@ -1,6 +1,7 @@
 package es.upm.miw.devops.rest.services;
 
 import es.upm.miw.devops.rest.models.User;
+import es.upm.miw.devops.rest.dtos.UserUpdateDto;
 import es.upm.miw.devops.rest.repositories.UserRepository;
 import es.upm.miw.devops.rest.models.Role;
 import org.junit.jupiter.api.Test;
@@ -218,6 +219,77 @@ class UserServiceTest {
         when(userRepository.findById("999")).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> userService.setActive("999", true))
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage("User with id 999 not found");
+
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    void testUpdate() {
+        User user = new User(
+                "1",
+                "John",
+                "Smith",
+                "john.smith@example.com",
+                "IDENTITY1",
+                "Main Street 1",
+                "Madrid",
+                "Madrid",
+                "28001",
+                true,
+                Role.CUSTOMER
+        );
+
+        UserUpdateDto userUpdateDto = new UserUpdateDto(
+                "Benjamin",
+                "Lopez",
+                "benjamin@example.com",
+                "IDENTITY2",
+                "New Street 2",
+                "Barcelona",
+                "Barcelona",
+                "08001",
+                false,
+                Role.ADMIN
+        );
+
+        when(userRepository.findById("1")).thenReturn(Optional.of(user));
+
+        userService.update("1", userUpdateDto);
+
+        assertThat(user.getFirstName()).isEqualTo("Benjamin");
+        assertThat(user.getFamilyName()).isEqualTo("Lopez");
+        assertThat(user.getEmail()).isEqualTo("benjamin@example.com");
+        assertThat(user.getIdentity()).isEqualTo("IDENTITY2");
+        assertThat(user.getAddress()).isEqualTo("New Street 2");
+        assertThat(user.getCity()).isEqualTo("Barcelona");
+        assertThat(user.getProvince()).isEqualTo("Barcelona");
+        assertThat(user.getPostalCode()).isEqualTo("08001");
+        assertThat(user.isActive()).isFalse();
+        assertThat(user.getRole()).isEqualTo(Role.ADMIN);
+
+        verify(userRepository).save(user);
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        UserUpdateDto userUpdateDto = new UserUpdateDto(
+                "Benjamin",
+                "Lopez",
+                "benjamin@example.com",
+                "IDENTITY2",
+                "New Street 2",
+                "Barcelona",
+                "Barcelona",
+                "08001",
+                false,
+                Role.ADMIN
+        );
+
+        when(userRepository.findById("999")).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> userService.update("999", userUpdateDto))
                 .isInstanceOf(UserNotFoundException.class)
                 .hasMessage("User with id 999 not found");
 
