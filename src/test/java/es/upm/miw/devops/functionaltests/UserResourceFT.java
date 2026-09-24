@@ -242,4 +242,30 @@ class UserResourceFT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+
+    @Test
+    void testUpdateActiveAdminCannotBeDeactivated() {
+        webTestClient.patch()
+                .uri("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue("""
+                    [
+                        {
+                            "id": "3",
+                            "active": false
+                        }
+                    ]
+                    """)
+                .exchange()
+                .expectStatus().isNoContent();
+
+        webTestClient.get()
+                .uri("/user/3")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.active").isEqualTo(true);
+    }
+
 }
