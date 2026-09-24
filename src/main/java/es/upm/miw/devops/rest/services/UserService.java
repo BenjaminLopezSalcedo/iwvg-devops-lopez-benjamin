@@ -1,6 +1,7 @@
 package es.upm.miw.devops.rest.services;
 
 import es.upm.miw.devops.rest.models.User;
+import es.upm.miw.devops.rest.models.Role;
 import es.upm.miw.devops.rest.dtos.UserUpdateDto;
 import es.upm.miw.devops.rest.dtos.UserActiveDto;
 import es.upm.miw.devops.rest.repositories.UserRepository;
@@ -72,8 +73,13 @@ public class UserService {
     }
 
     public void updateActive(List<UserActiveDto> users) {
-        users.forEach(userActiveDto ->
-                this.setActive(userActiveDto.id(), userActiveDto.active())
+        users.forEach( userActiveDto -> {
+            User user = this.findById(userActiveDto.id());
+            if ( user.getRole() == Role.ADMIN && user.isActive()) {
+                return;
+            }
+            this.setActive(userActiveDto.id(), userActiveDto.active());
+        }
         );
     }
 
