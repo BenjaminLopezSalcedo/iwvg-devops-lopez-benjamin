@@ -144,7 +144,7 @@ public class UserSeeder {
         String familyName = randomElement(FAMILY_NAMES, RANDOM);
         String city = randomElement(CITIES, RANDOM);
         String province = randomElement(PROVINCES, RANDOM);
-        Role role = id == 3 ? Role.ADMIN : randomRole();
+        Role role = id == 3 ? Role.ADMIN : (id == 2 ? Role.CUSTOMER : randomRole());
 
         return new User(
                 String.valueOf(id),
