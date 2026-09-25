@@ -11,7 +11,7 @@
 
 ### Estado del código
 [![DevOps](https://github.com/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/BenjaminLopezSalcedo/iwvg-devops-lopez-benjamin/blob/main/.github/workflows/continuous-integration.yml)
-[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=BenjaminLopezSalcedo_iwvg-devops-lopez-benjamin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=BenjaminLopezSalcedo_iwvg-devops-lopez-benjamin)
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=benjaminlopezsalcedo_iwvg-devops-lopez-benjamin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=benjaminlopezsalcedo_iwvg-devops-lopez-benjamin)
 [![Render broken](https://iwvg-devops-lopez-benjamin.onrender.com/version-badge)](https://iwvg-devops-lopez-benjamin.onrender.com/swagger-ui.html)
 [![AWS](http://15.237.53.63:10000/version-badge)](http://15.237.53.63:10000)
 
